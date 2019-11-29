@@ -65,7 +65,7 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
                     if (enderecoFinal.size > 0) {
 
 
-                    val parameters = JsonObject()
+                        val parameters = JsonObject()
 
                         val list = JsonArray()
                         list.add( enderecoinicial[0].latitude)
@@ -78,24 +78,19 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
                         val gson = GsonBuilder().setPrettyPrinting().create()
 
-                        var t = {
-                            array : list,
-                            name : "point"
-                        }
+                        parameters.add("point",  list) as JsonArray
+                        parameters.add("point",  list2)
 
-                   parameters.add("point",  list) as JsonArray
-                   parameters.add("point",  list2)
-
-                        parameters.addProperty("places", par)
+                        parameters.addProperty("places", "")
 
 
-                    parameters.addProperty("fuel_consumption", edt_consumo.text.toString())
-                    parameters.addProperty("fuel_price", edt_valor.text.toString())
-                    parameters.addProperty("eixos", eixos)
+                        parameters.addProperty("fuel_consumption", edt_consumo.text.toString())
+                        parameters.addProperty("fuel_price", edt_valor.text.toString())
+                        parameters.addProperty("eixos", eixos)
 
-                   var result = HttpUtils.post(BASE_URL, parameters.toString())
+                        var result = HttpUtils.post(BASE_URL, parameters.toString())
 
-                    println(result)
+                        println(result)
                     }else{
                         Toast.makeText(context!!, "Endereco Final invalido", Toast.LENGTH_SHORT).show()
                     }

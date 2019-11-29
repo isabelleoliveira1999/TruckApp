@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.redfox.tech.mytesteapplication.R
 import com.redfox.tech.mytesteapplication.Utilities.HttpUtils
@@ -75,14 +76,17 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
                         list2.add(enderecoFinal[0].latitude)
                         list2.add(enderecoFinal[0].longitude)
 
+                        val list1 = JsonArray()
+
+                        list1.add(list)
+                        list1.add(list2)
+
 
                         val gson = GsonBuilder().setPrettyPrinting().create()
 
-                        parameters.add("point",  list) as JsonArray
-                        parameters.add("point",  list2)
 
-                        parameters.addProperty("places", "")
-
+                        parameters.add("point",  list1)
+                        parameters.add("places", list1)
 
                         parameters.addProperty("fuel_consumption", edt_consumo.text.toString())
                         parameters.addProperty("fuel_price", edt_valor.text.toString())

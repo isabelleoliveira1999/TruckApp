@@ -11,7 +11,9 @@ import java.util.regex.Pattern
 object Util {
 
 
-    const val BASE_URL = "https://geo.api.truckpad.io/v1/route"
+    const val BASE_URL_ROUTE = "https://geo.api.truckpad.io/v1/route"
+
+    const val BASE_URL_PRICE = "https://geo.api.truckpad.io/v1/antt_price/all"
 
 
     fun showToast(context: Context, message: String?) {

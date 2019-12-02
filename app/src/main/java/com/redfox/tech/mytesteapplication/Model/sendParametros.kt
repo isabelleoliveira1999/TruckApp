@@ -17,7 +17,7 @@ data class sendParametros(
                            @SerializedName("fuel_consumption")
                            @Expose
                            val fuel_consumption: String?,
-                           @SerializedName("eixos")
+                           @SerializedName("axis")
                            @Expose
                            val eixos: Int?
 

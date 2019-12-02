@@ -9,15 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
+import com.redfox.tech.mytesteapplication.Model.getParametros
 import com.redfox.tech.mytesteapplication.Model.point1Parametros
-import com.redfox.tech.mytesteapplication.Model.point2Parametros
-import com.redfox.tech.mytesteapplication.Model.pointsParametros
 import com.redfox.tech.mytesteapplication.Model.sendParametros
 import com.redfox.tech.mytesteapplication.R
-import com.redfox.tech.mytesteapplication.Utilities.HttpUtils
-import com.redfox.tech.mytesteapplication.Utilities.Util.BASE_URL
+import com.redfox.tech.mytesteapplication.Task.ListaTask
+import com.redfox.tech.mytesteapplication.Utilities.Util
 
 
 class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
@@ -90,9 +89,7 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
                         val jsonInString = gson.toJson(param)
 
-                        var result = HttpUtils.post(BASE_URL, jsonInString)
-
-                        println(result)
+                        addData(jsonInString)
                     }else{
                         Toast.makeText(context!!, "Endereco Final invalido", Toast.LENGTH_SHORT).show()
                     }
@@ -119,5 +116,31 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
     override fun onItemSelected(arg0: AdapterView<*>?, arg1: View?, position: Int, id: Long) {
         eixos = list_of_items.get(position!!)
+    }
+
+
+    fun addData(parametros: String?) {
+        object : ListaTask(parametros!!) {
+
+            override fun onPostExecute(result: String?) {
+                super.onPostExecute(result)
+                if (result != null) {
+                    try {
+                        val serializer = Gson()
+                     var Lista = serializer.fromJson<getParametros>(result, getParametros::class.java)
+                        if (Lista != null) {
+
+                        }
+
+                    } catch (ex: Exception) {
+                        Util.showMessage(
+                            context!!,
+                            "Aviso",
+                            "Sem acesso à internet, tente novamente!"
+                        )
+                    }
+                }
+            }
+        }.execute()
     }
 }

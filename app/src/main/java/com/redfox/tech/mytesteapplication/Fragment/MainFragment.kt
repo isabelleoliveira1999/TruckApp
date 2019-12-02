@@ -11,7 +11,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.redfox.tech.mytesteapplication.Model.getParametros
+import com.redfox.tech.mytesteapplication.Model.getValues
 import com.redfox.tech.mytesteapplication.Model.point1Parametros
 import com.redfox.tech.mytesteapplication.Model.sendParametros
 import com.redfox.tech.mytesteapplication.R
@@ -127,8 +129,51 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
                 if (result != null) {
                     try {
                         val serializer = Gson()
-                     var Lista = serializer.fromJson<getParametros>(result, getParametros::class.java)
+                     var Lista = serializer.fromJson(result, getParametros::class.java)
                         if (Lista != null) {
+
+                            val parameters = JsonObject()
+
+
+                            parameters.addProperty("axis", eixos)
+                            parameters.addProperty("distance", Lista.distance)
+                            parameters.addProperty("has_return_shipment", true)
+
+
+                            addValues(parameters.toString(), result)
+
+                        }
+
+                    } catch (ex: Exception) {
+                        Util.showMessage(
+                            context!!,
+                            "Aviso",
+                            "Sem acesso à internet, tente novamente!"
+                        )
+                    }
+                }
+            }
+        }.execute()
+    }
+
+    fun addValues(parametros: String?, result1: String) {
+        object : ListaTask(parametros!!) {
+
+            override fun onPostExecute(result: String?) {
+                super.onPostExecute(result)
+                if (result != null) {
+                    try {
+                        val serializer = Gson()
+                        var Lista = serializer.fromJson(result, getValues::class.java)
+                        if (Lista != null) {
+
+                            var detalhe = DetalhesFragment()
+
+                            detalhe.add(result1, result, eixos)
+                            activity!!.supportFragmentManager.beginTransaction()
+                                .replace(R.id.container, detalhe)
+                                .addToBackStack("")
+                                .commit()
 
                         }
 

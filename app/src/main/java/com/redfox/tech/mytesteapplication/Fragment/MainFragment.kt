@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.redfox.tech.mytesteapplication.Model.point1Parametros
+import com.redfox.tech.mytesteapplication.Model.point2Parametros
+import com.redfox.tech.mytesteapplication.Model.pointsParametros
+import com.redfox.tech.mytesteapplication.Model.sendParametros
 import com.redfox.tech.mytesteapplication.R
 import com.redfox.tech.mytesteapplication.Utilities.HttpUtils
 import com.redfox.tech.mytesteapplication.Utilities.Util.BASE_URL
@@ -66,33 +68,29 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
                     if (enderecoFinal.size > 0) {
 
 
-                        val parameters = JsonObject()
-
-                        val list = JsonArray()
+                        val list = ArrayList<Double>()
                         list.add( enderecoinicial[0].latitude)
                         list.add(enderecoinicial[0].longitude)
 
-                        val list2 = JsonArray()
+                        val list2 = ArrayList<Double>()
                         list2.add(enderecoFinal[0].latitude)
                         list2.add(enderecoFinal[0].longitude)
 
-                        val list1 = JsonArray()
+                        var point1Parametros = ArrayList<point1Parametros>()
+                        var point2Parametros = point1Parametros(list)
+                        var point3Parametros = point1Parametros(list2)
+                        point1Parametros.add(point2Parametros)
+                        point1Parametros.add(point3Parametros)
 
-                        list1.add(list)
-                        list1.add(list2)
 
+                        var param = sendParametros(point1Parametros, edt_valor.text.toString(), edt_consumo.text.toString(),eixos )
 
                         val gson = GsonBuilder().setPrettyPrinting().create()
 
 
-                        parameters.add("point",  list1)
-                        parameters.add("places", list1)
+                        val jsonInString = gson.toJson(param)
 
-                        parameters.addProperty("fuel_consumption", edt_consumo.text.toString())
-                        parameters.addProperty("fuel_price", edt_valor.text.toString())
-                        parameters.addProperty("eixos", eixos)
-
-                        var result = HttpUtils.post(BASE_URL, parameters.toString())
+                        var result = HttpUtils.post(BASE_URL, jsonInString)
 
                         println(result)
                     }else{

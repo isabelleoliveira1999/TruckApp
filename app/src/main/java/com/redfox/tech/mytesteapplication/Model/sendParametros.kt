@@ -3,13 +3,22 @@ package com.redfox.tech.mytesteapplication.Model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-data class sendParameters(
-                           @SerializedName("id")
+data class sendParametros(
+
+                           @SerializedName("places")
                            @Expose
-                           val id: Int?,
-                           @SerializedName("type")
+                           val places: List<point1Parametros?>,
+                           @SerializedName("fuel_price")
                            @Expose
-                           val type: String?
+                           val fuel_price: String?,
+                           @SerializedName("fuel_consumption")
+                           @Expose
+                           val fuel_consumption: String?,
+                           @SerializedName("eixos")
+                           @Expose
+                           val eixos: Int?
+
 )

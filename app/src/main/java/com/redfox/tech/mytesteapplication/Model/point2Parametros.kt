@@ -6,7 +6,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-data class point1Parametros(
+data class point2Parametros(
 
                            @SerializedName("point")
                            @Expose

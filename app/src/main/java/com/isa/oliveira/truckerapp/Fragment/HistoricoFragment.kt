@@ -34,20 +34,20 @@ class HistoricoFragment : Fragment(){
     private lateinit var Lista1: getParametros
     private lateinit var Lista2: getValues
 
-    private  var auth: FirebaseAuth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view: View = inflater.inflate(R.layout.fragment_historico, container, false)
 
-
+        auth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
         var Main = MainActivity()
 
-        var titulo = Main.findViewById<TextView>(R.id.txt_titulo)
+        var titulo = activity!!.findViewById<TextView>(R.id.txt_titulo)
 
-        var his = Main.findViewById<TextView>(R.id.histo)
-        var hisim = Main.findViewById<ImageView>(R.id.histoIm)
-        var close = Main.findViewById<ImageView>(R.id.ico_back)
+        var his = activity!!.findViewById<TextView>(R.id.histo)
+        var hisim = activity!!.findViewById<ImageView>(R.id.histoIm)
+        var close = activity!!.findViewById<ImageView>(R.id.ico_back)
 
         var rotas = view.findViewById<TextView>(R.id.sem_rotas)
         close.setOnClickListener {

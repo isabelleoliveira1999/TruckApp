@@ -36,13 +36,13 @@ class DetalhesFragment : Fragment(){
     private lateinit var geral : TextView
     private lateinit var granel : TextView
     private lateinit var neogranel : TextView
-    private  var auth: FirebaseAuth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
+    private  lateinit  var auth: FirebaseAuth
     private lateinit var frigorificada : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view: View = inflater.inflate(R.layout.fragment_detalhes, container, false)
-
+        auth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
         origem = view.findViewById(R.id.origem)
         combustivel = view.findViewById(R.id.combustivel)
         destino = view.findViewById(R.id.destino)
@@ -59,11 +59,11 @@ class DetalhesFragment : Fragment(){
 
         var Main = MainActivity()
 
-        var titulo = Main.findViewById<TextView>(R.id.txt_titulo)
+        var titulo = activity!!.findViewById<TextView>(R.id.txt_titulo)
 
-        var his = Main.findViewById<TextView>(R.id.histo)
-        var hisim = Main.findViewById<ImageView>(R.id.histoIm)
-        var close = Main.findViewById<ImageView>(R.id.ico_back)
+        var his = activity!!.findViewById<TextView>(R.id.histo)
+        var hisim = activity!!.findViewById<ImageView>(R.id.histoIm)
+        var close = activity!!.findViewById<ImageView>(R.id.ico_back)
 
 
         close.setOnClickListener {

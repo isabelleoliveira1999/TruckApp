@@ -45,7 +45,7 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private lateinit var btn_enviar:Button
 
 
-    private  var auth: FirebaseAuth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
+    private lateinit var auth: FirebaseAuth
     var list_of_items = arrayOf(2, 3, 4, 5, 6, 7, 8)
     var eixos : Int = 0
 
@@ -53,7 +53,7 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
         val view: View = inflater.inflate(R.layout.fragment_main, container, false)
 
-
+        auth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
         edt_inicial = view.findViewById(R.id.edt_inicial)
         edt_final = view.findViewById(R.id.edt_final)
         edt_consumo = view.findViewById(R.id.edt_consumo)
@@ -63,11 +63,11 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
         var Main = MainActivity()
 
-        var titulo = Main.findViewById<TextView>(R.id.txt_titulo)
+        var titulo =activity!!.findViewById<TextView>(R.id.txt_titulo)
 
-        var his = Main.findViewById<TextView>(R.id.histo)
-        var hisim = Main.findViewById<ImageView>(R.id.histoIm)
-       var close = Main.findViewById<ImageView>(R.id.ico_back)
+        var his = activity!!.findViewById<TextView>(R.id.histo)
+        var hisim = activity!!.findViewById<ImageView>(R.id.histoIm)
+       var close = activity!!.findViewById<ImageView>(R.id.ico_back)
 
 
         close.setOnClickListener {

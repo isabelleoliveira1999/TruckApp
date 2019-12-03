@@ -12,17 +12,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.isa.oliveira.truckerapp.Activity.LoginActivity
 import com.isa.oliveira.truckerapp.Activity.MainActivity
+import com.isa.oliveira.truckerapp.Model.allDetails
 import com.isa.oliveira.truckerapp.Model.getParametros
 import com.isa.oliveira.truckerapp.Model.getValues
 import com.isa.oliveira.truckerapp.R
 
 
-class DetalhesFragment : Fragment(){
+class HistoricoDetalheFragment : Fragment(){
 
 
     private var Eixo: Int = 0
-    private lateinit var Lista1: getParametros
-    private lateinit var Lista2: getValues
+    private lateinit var allDetails: allDetails
     private lateinit var origem : TextView
     private lateinit var combustivel : TextView
     private lateinit var destino : TextView
@@ -37,6 +37,7 @@ class DetalhesFragment : Fragment(){
     private lateinit var granel : TextView
     private lateinit var neogranel : TextView
     private  var auth: FirebaseAuth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
+
     private lateinit var frigorificada : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -97,31 +98,31 @@ class DetalhesFragment : Fragment(){
             his.visibility = View.VISIBLE
         }
 
+        titulo.setText("Detalhe")
 
-        titulo.setText("Rota Resultado")
 
-      //  origem.setText(Lista1.)
-        combustivel.text = Lista1.fuel_usage_unit+ " " + Lista1.fuel_usage
+      //  origem.setText(allDetails.)
+        combustivel.text = allDetails.fuel_usage_unit+ " " + allDetails.fuel_usage
       //  destino = view.findViewById(R.id.destino)
-        distancia.text = Lista1.distance.toString() + " " + Lista1.distance_unit
-        duracao.text =Lista1.duration.toString() + " " +  Lista1.duration_unit
+        distancia.text = allDetails.distance.toString() + " " + allDetails.distance_unit
+        duracao.text =allDetails.duration.toString() + " " +  allDetails.duration_unit
         eixos.text = Eixo.toString()
-        total.text = Lista1.total_cost.toString()
-        perigosa.text = "R$ " + Lista2.perigosa
-        pedagio.text = Lista1.toll_count.toString()  + "  +  Valor total dos pedagios  " + Lista1.toll_cost_unit + " " +Lista1.toll_cost
-        geral.text = "R$ " + Lista2.geral
-        granel.text = "R$ " + Lista2.granel
-        neogranel.text = "R$ " + Lista2.neogranel
-        frigorificada.text = "R$ " + Lista2.frigorificada
+        total.text = allDetails.total_cost.toString()
+        perigosa.text = "R$ " + allDetails.perigosa
+        pedagio.text = allDetails.toll_count.toString()  + "  +  Valor total dos pedagios  " + allDetails.toll_cost_unit + " " +allDetails.toll_cost
+        geral.text = "R$ " + allDetails.geral
+        granel.text = "R$ " + allDetails.granel
+        neogranel.text = "R$ " + allDetails.neogranel
+        frigorificada.text = "R$ " + allDetails.frigorificada
 
         return  view
     }
 
-    fun add(result1 : String, result2: String, eixo : Int){
+    fun add(allDetails: allDetails, eixo : Int){
 
         val serializer = Gson()
-         Lista2 = serializer.fromJson(result2, getValues::class.java)
-         Lista1 = serializer.fromJson(result1, getParametros::class.java)
+        
+        this.allDetails = allDetails
         Eixo = eixo
     }
 

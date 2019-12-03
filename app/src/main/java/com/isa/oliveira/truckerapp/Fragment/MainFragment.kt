@@ -1,20 +1,25 @@
 package com.isa.oliveira.truckerapp.Fragment
 
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import com.isa.oliveira.truckerapp.Activity.LoginActivity
+import com.isa.oliveira.truckerapp.Activity.MainActivity
 import com.isa.oliveira.truckerapp.Model.getParametros
 import com.isa.oliveira.truckerapp.Model.getValues
 import com.isa.oliveira.truckerapp.Model.point1Parametros
@@ -40,7 +45,7 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
     private lateinit var btn_enviar:Button
 
 
-    private lateinit var auth: FirebaseAuth
+    private  var auth: FirebaseAuth = FirebaseAuth(FirebaseApp.initializeApp(context!!))
     var list_of_items = arrayOf(2, 3, 4, 5, 6, 7, 8)
     var eixos : Int = 0
 
@@ -55,6 +60,48 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
         edt_valor = view.findViewById(R.id.edt_valor)
         spn_eixos = view.findViewById(R.id.spn_eixos)
         btn_enviar = view.findViewById(R.id.btn_proximo)
+
+        var Main = MainActivity()
+
+        var titulo = Main.findViewById<TextView>(R.id.txt_titulo)
+
+        var his = Main.findViewById<TextView>(R.id.histo)
+        var hisim = Main.findViewById<ImageView>(R.id.histoIm)
+       var close = Main.findViewById<ImageView>(R.id.ico_back)
+
+
+        close.setOnClickListener {
+            auth.signOut()
+            val i = Intent(activity, LoginActivity::class.java)
+            startActivity(i)
+            activity!!.finish()
+        }
+        if (auth.currentUser != null){
+            hisim.setOnClickListener {
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, HistoricoFragment())
+                    .addToBackStack("")
+                    .commit()
+            }
+            his.setOnClickListener {
+                activity!!.supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, HistoricoFragment())
+                    .addToBackStack("")
+                    .commit()
+            }
+            his.visibility = VISIBLE
+
+        }else{
+            hisim.setOnClickListener {
+                Toast.makeText(context, "Logue para acessar seu historico", Toast.LENGTH_SHORT).show()
+            }
+            his.setOnClickListener {
+             Toast.makeText(context, "Logue para acessar seu historico", Toast.LENGTH_SHORT).show()
+            }
+            his.visibility = VISIBLE
+        }
+
+        titulo.setText("Rotas")
 
 
         spn_eixos.setOnItemSelectedListener(this)

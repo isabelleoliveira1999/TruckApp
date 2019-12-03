@@ -21,18 +21,18 @@ class SplashActivity : Activity() {
 
         Handler().postDelayed({
 
-          /*  var firebaseApp = FirebaseApp.initializeApp(this)
+            var firebaseApp = FirebaseApp.initializeApp(this)
             var auth = FirebaseAuth(firebaseApp)
-*/
-            /*if(!auth.currentUser!!.uid.isNullOrEmpty()){*/
-            /*    val i = Intent(this@SplashActivity, LoginActivity::class.java)
+
+            if(auth.currentUser == null){
+                val i = Intent(this@SplashActivity, LoginActivity::class.java)
                 startActivity(i)
                 finish()
-            }else{*/
+            }else{
                 val i = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(i)
                 finish()
-            //}
+            }
 
         }, SPLASH_TIME_OUT.toLong())
     }

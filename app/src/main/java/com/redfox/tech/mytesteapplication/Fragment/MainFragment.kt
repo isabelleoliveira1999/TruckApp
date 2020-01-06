@@ -70,8 +70,9 @@ class MainFragment : Fragment(), AdapterView.OnItemSelectedListener{
 
 
                         val list = ArrayList<Double>()
-                        list.add( enderecoinicial[0].latitude)
                         list.add(enderecoinicial[0].longitude)
+                        list.add( enderecoinicial[0].latitude)
+                        
 
                         val list2 = ArrayList<Double>()
                         list2.add(enderecoFinal[0].latitude)
